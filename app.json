@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Prototype V_1",
+    "name": "StudyWareAppProtype",
     "description": "An empty new project",
-    "slug": "appDevProt",
-    "privacy": "unlisted",
+    "slug": "SWPrototype",
+    "privacy": "public",
     "sdkVersion": "22.0.0",
-    "version": "1.0.0",
+    "version": "0.1.2",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icon.png",
