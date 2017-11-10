@@ -3,7 +3,7 @@
     "name": "StudyWareAppProtype",
     "description": "An empty new project",
     "slug": "SWPrototype",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "22.0.0",
     "version": "0.1.2",
     "orientation": "portrait",
