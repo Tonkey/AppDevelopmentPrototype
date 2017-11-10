@@ -8,7 +8,7 @@
     "version": "0.1.2",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/icon.png",
+    "icon": "./utils/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
