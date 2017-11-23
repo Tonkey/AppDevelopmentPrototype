@@ -2,42 +2,59 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView, Image } from 'react-native'
 import HandInComponent from './HandInComponent'
 import ReviewComponent from './ReviewComponent'
+import { connect } from 'react-redux'
 
+@connect((store) => {
+    return {
+        handIns: store.class.selected.handIns,
+        selected: store.class.selected,
+        fetched: store.class.fetched,
+        fetching: store.class.fetching
+    }
+})
 export default class HandIn extends Component {
     render() {
+        let doRender = ''
+
         const points = this.getPointsGotten()
         const pointsAvailable = this.getMaxPoints()
+
+        if (this.props.selected === null) {
+            doRender = <Text>Loading...</Text>
+        } else {
+            doRender = (
+                this.props.handIns.map((item, index) => {
+                    if (item.type === 'Hand-in') {
+                        return (
+                            <View key={item.id}>
+                                <HandInComponent
+                                    description={item.description}
+                                    pointsAvailable={item.pointsAvailable}
+                                    pointsGotten={item.pointsGotten}
+                                />
+                            </View>
+                        )
+                    } else {
+                        return (
+                            <View key={item.id}>
+                                <ReviewComponent
+                                    description={item.description}
+                                    pointsAvailable={item.pointsAvailable}
+                                    pointsGotten={item.pointsGotten}
+                                />
+                            </View>
+                        )
+                    }
+                })
+            )
+        }
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Total for this period: {points} (max: {pointsAvailable})</Text>
                     <Text style={styles.subHeaderText}>Period Hand-in Assignments</Text>
                     <ScrollView>
-                        {
-                            this.state.attendance.map((item, index) => {
-                                if (item.type === 'Hand-in') {
-                                    return (
-                                        <View key={item.id}>
-                                            <HandInComponent
-                                                description={item.description}
-                                                pointsAvailable={item.pointsAvailable}
-                                                pointsGotten={item.pointsGotten}
-                                            />
-                                        </View>
-                                    )
-                                } else {
-                                    return (
-                                        <View key={item.id}>
-                                            <ReviewComponent
-                                                description={item.description}
-                                                pointsAvailable={item.pointsAvailable}
-                                                pointsGotten={item.pointsGotten}
-                                            />
-                                        </View>
-                                    )
-                                }
-                            })
-                        }
+                        { doRender }
                     </ScrollView>
                 </View>
                 <View></View>
@@ -47,16 +64,16 @@ export default class HandIn extends Component {
 
     getMaxPoints = () => {
         var sum = '0'
-        for (var i = 0; i < this.state.attendance.length; i++) {
-            sum = parseInt(sum) + parseInt(this.state.attendance[i].pointsAvailable)
+        for (var i = 0; i < this.props.handIns.length; i++) {
+            sum = parseInt(sum) + parseInt(this.props.handIns[i].pointsAvailable)
         }
         return sum
     }
 
     getPointsGotten = () => {
         var sum = '0'
-        for (var i = 0; i < this.state.attendance.length; i++) {
-            sum = parseInt(sum) + parseInt(this.state.attendance[i].pointsGotten)
+        for (var i = 0; i < this.props.handIns.length; i++) {
+            sum = parseInt(sum) + parseInt(this.props.handIns[i].pointsGotten)
         }
         return sum
     }
@@ -65,18 +82,18 @@ export default class HandIn extends Component {
         super(props)
         this.getMaxPoints = this.getMaxPoints.bind(this)
         this.getPointsGotten = this.getPointsGotten.bind(this)
-        this.state = {
-            attendance: [
-                { 'id': 1, 'description': 'P1_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-                { 'id': 2, 'description': 'P1_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
-                { 'id': 3, 'description': 'P2_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-                { 'id': 4, 'description': 'P2_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
-                { 'id': 5, 'description': 'P3_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-                { 'id': 6, 'description': 'P4_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-                { 'id': 7, 'description': 'P5_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-                { 'id': 8, 'description': 'P6_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-            ]
-        }
+        // this.state = {
+        //     attendance: [
+        //         { 'id': 1, 'description': 'P1_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
+        //         { 'id': 2, 'description': 'P1_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
+        //         { 'id': 3, 'description': 'P2_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
+        //         { 'id': 4, 'description': 'P2_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
+        //         { 'id': 5, 'description': 'P3_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
+        //         { 'id': 6, 'description': 'P4_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
+        //         { 'id': 7, 'description': 'P5_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
+        //         { 'id': 8, 'description': 'P6_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
+        //     ]
+        // }
 
 
     }

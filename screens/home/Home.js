@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
+import { connect } from 'react-redux'
 
-
+@connect((store) => {
+    return {
+        user: store.user.user,
+        joke: store.user.joke
+    }
+})
 export default class Home extends Component {
     render() {
         const { state } = this.props.navigation;
@@ -10,13 +16,13 @@ export default class Home extends Component {
                 <View style={styles.logoContainer}>
                     <Image
                         style={styles.logo}
-                        source={require('../../utils/cphbusiness.png')}
+                        source={require('../../assets/MySchool.png')}
                     />
                 </View>
                 <View style={styles.formContainer}>
                     <Text style={styles.formTitle}>Logged in as:</Text>
-                    <Text style={styles.formText}>{state.params.name}</Text>
-                    <Text style={styles.formText}>userName: testUsername</Text>
+                    <Text style={styles.formText}>{this.props.user.userName}</Text>
+                    <Text style={styles.formText}>userName: {this.props.user.shortHandName}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity 
@@ -38,10 +44,10 @@ export default class Home extends Component {
                     <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Login')}><Text style={styles.buttonText}>Logout</Text></TouchableOpacity>
                 </View>
                 <View style={styles.ContainerBottom}>
-                    <Text style={styles.textBottom}>"Whenever the cashier at the grocery store asks my dad if he would like the milk in a bag he replies, 'No, just leave it in the carton!"</Text>
+                    <Text style={styles.textBottom}>{this.props.joke}</Text>
                     <Image 
                         style={styles.logoBottom}
-                        source={require('../../utils/logo.png')}
+                        source={require('../../assets/newLogo.png')}
                     />
                 </View>
             </View>
@@ -132,5 +138,4 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
 })
-// Whenever the cashier at the grocery store asks my dad if he would like the milk in a bag he replies, 'No, just leave it in the carton!
 /*Change cph-nm106 with {state.params.name}*/

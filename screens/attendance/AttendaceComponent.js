@@ -10,7 +10,7 @@ export default class AttendanceComponent extends Component {
         
         return (
             <View style={styles.container}>
-                <Image style={styles.logo} source={require('../../utils/logo1.png')} />
+                <Image style={styles.logo} source={require('../../assets/logo1.png')} />
                 <View style={{ padding: 10 }}>
                     <Text>{this.props.description} : {this.props.pointsGotten}</Text>
                     <Text>Maximum for this task: {this.props.pointsAvailable}</Text>

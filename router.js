@@ -47,6 +47,7 @@ export const Tabs = TabNavigator({
 },
     {
         initialRouteName: 'Home',
+        lazy: true,
         tabBarOptions: {
             // showIcon: true,
             // overflow: true,

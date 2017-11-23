@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Platform } from 'react-native'
 import { Constants } from 'expo'
 import { StackNavigator } from 'react-navigation'
+import { Provider } from 'react-redux'
 
 
 import { Tabs } from './router'
 import Login from './screens/login/Login'
-
+import store from './store'
 
 const AppNavigator = StackNavigator (
   {
@@ -29,4 +30,7 @@ const AppNavigator = StackNavigator (
   }
 )
 
-export default () => <AppNavigator />
+export default () => (<Provider store={store}>
+  <AppNavigator />
+  </Provider>
+)

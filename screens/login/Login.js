@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, KeyboardAvoidingView, Alert } from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
+import * as userAction from '../../actions/userActions'
 
+
+@connect((store) => {
+    return {
+        user: store.user.user,
+        fetched: store.user.fetched
+    }
+})
 class Login extends Component {
-
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
                     <Image
                         style={styles.logo}
-                        source={require('../../utils/cphbusiness.png')}
+                        source={require('../../assets/MySchool.png')}
                     />
                     <Text style={styles.title}>Welcome to CPHBusiness StudyPoints App</Text>
               </View>
@@ -41,13 +49,18 @@ class Login extends Component {
                 <View style={styles.logoContainerBottom}>
                     <Image
                         style={styles.logoBottom}
-                        source={require('../../utils/cphbusiness_studyware_transparent.png')}
+                        source={require('../../assets/cphbusiness_studyware_transparent.png')}
                     />
                 </View>
             </View>
         );
     }
 
+    
+    componentWillMount() {
+        this.props.dispatch(userAction.fetchUser())
+    }
+    
 
     constructor(props) {
         super(props);
@@ -67,7 +80,7 @@ class Login extends Component {
 
         if(text == '' || password == ''){
             Alert.alert('Username or Password was incorrect')
-        } else if(password === 'user' && text === 'user') {
+        } else if(password === this.props.user.password && text === this.props.user.userName) {
             this.navigateAction()
         } else {
             Alert.alert('Username or Password was incorrect')
