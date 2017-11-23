@@ -13,47 +13,45 @@ import { connect } from 'react-redux'
 })
 export default class Attendance extends Component {
     render() {
+        let doRender = ''
         const points = this.getPointsGotten()
         const pointsAvailable = this.getMaxPoints()
-        let doRender = ''
 
 
-        if(this.props.selected === null){
+        if (this.props.selected === null || this.props.selected === undefined) {
             doRender = <Text>Loading</Text>
         } else {
-            doRender= (<ScrollView>
-                {
-                    this.props.attendance.map((item, index) => {
-                        return (
-                            <View key={item.id}>
-                                <AttendanceComponent
-                                    description={item.description}
-                                    pointsAvailable={item.pointsAvailable}
-                                    pointsGotten={item.pointsGotten}
-                                />
-                            </View>
-                        )
-                    })
-                }
-                </ScrollView>)
+            doRender = (<View style={styles.headerContainer}>
+                <Text style={styles.headerText}>Total for this period: {this.props.selected.points} (max: {this.props.selected.pointsAvailable})</Text>
+                <Text style={styles.subHeaderText}>Attendance Days</Text>
+                <ScrollView>
+                    {
+                        this.props.selected.attendance.map((item, index) => {
+                            return (
+                                <View key={item.id}>
+                                    <AttendanceComponent
+                                        description={item.description}
+                                        pointsAvailable={item.pointsAvailable}
+                                        pointsGotten={item.pointsGotten}
+                                    />
+                                </View>
+                            )
+                        })
+                    }
+                </ScrollView>
+            </View>)
         }
 
         return (
             <View style={styles.container}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>Total for this period: {points} (max: {pointsAvailable})</Text>
-                    <Text style={styles.subHeaderText}>Attendance Days</Text>
-                    {doRender}
-                </View>
+
+
+                {doRender}
+
                 <View></View>
             </View>
         )
     }
-
-    componentDidMount() {
-        console.log('attendance did mount')
-    }
-    
 
     getMaxPoints = () => {
         var sum = '0'
@@ -115,17 +113,3 @@ const styles = StyleSheet.create({
         height: 60
     }
 })
-
-// {
-//     this.state.attendance.map((item, index) => {
-//         return (
-//             <View key={item.id}>
-//                 <AttendanceComponent
-//                     description={item.description}
-//                     pointsAvailable={item.pointsAvailable}
-//                     pointsGotten={item.pointsGotten}
-//                 />
-//             </View>
-//         )
-//     })
-// }

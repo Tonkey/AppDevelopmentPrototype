@@ -40,11 +40,11 @@ export function fetchClass() {
                     { 'id': 8, 'description': 'P6_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },]
                 },
 
-                { 'id': '2', 'value': 'CPH-InternetOfThings', 'pointsAvailable': '75', 'pointsRequired': '20', 'points': '30' },
+                { 'id': '2', 'value': 'CPH-InternetOfThings', 'pointsAvailable': '75', 'pointsRequired': '20', 'points': '30', attendance: [], handIns: [] },
 
-                { 'id': '3', 'value': 'CPH-AppDevelopment', 'pointsAvailable': '55', 'pointsRequired': '30', 'points': '44' },
+                { 'id': '3', 'value': 'CPH-AppDevelopment', 'pointsAvailable': '55', 'pointsRequired': '30', 'points': '44', attendance: [], handIns: [] },
 
-                { 'id': '4', 'value': 'CPH-StudentsWritingSoftware', 'pointsAvailable': '80', 'pointsRequired': '80', 'points': '80' },
+                { 'id': '4', 'value': 'CPH-StudentsWritingSoftware', 'pointsAvailable': '80', 'pointsRequired': '80', 'points': '80', attendance: [], handIns: [] },
             ]
         }
     }
