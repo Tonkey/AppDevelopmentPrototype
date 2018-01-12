@@ -79,8 +79,8 @@ export default class Home extends Component {
     }
 
     onRegister() {
-        // let today= new Date().getMonth()+1 +'/'+ new Date().getDate()
-        let today= '1/17'
+        let today= new Date().getMonth()+1 +'/'+ new Date().getDate()
+        // let today= '1/17'
         let tempSelected = {...this.props.selected}
         let doUpdate = false
 
