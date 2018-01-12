@@ -18,6 +18,12 @@ export function fetchUser(){
     }
 }
 
+export function authUserFailed(){
+    return{
+        type: 'FETCH_USER_REJECTED'
+    }
+}
+
 export function logout(){
     return {
         type: 'LOGOUT'

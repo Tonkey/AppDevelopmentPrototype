@@ -59,8 +59,6 @@ export default class Home extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={
                             () => {
-                                // this.props.dispatch(userActions.logout())
-                                // this.props.dispatch(classActions.logout())
                                 this.props.navigation.navigate('Login')
                             }
                         }><Text style={styles.buttonText}>Logout</Text></TouchableOpacity>

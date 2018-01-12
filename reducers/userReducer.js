@@ -17,14 +17,15 @@ export default function reducer(state={
             break;
         }
         case 'FETCH_USER_REJECTED': {
-            return {...state, fetching: false, error: action.payload}
+            return {...state, fetching: false, error: action.payload, loginTry: false}
         }
         case 'FETCH_USER_FULFILLED': {
             return {
                 ...state,
                 fetching: false,
                 fetched: true,
-                user: action.payload
+                user: action.payload,
+                loginTry: false
             }
         }
         case 'SET_USER': {

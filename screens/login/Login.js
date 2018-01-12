@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, KeyboardAvoidingView, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, KeyboardAvoidingView, Alert, BackHandler } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import * as userAction from '../../actions/userActions'
@@ -69,8 +69,15 @@ class Login extends Component {
     componentDidMount() {
         this.props.dispatch(userActions.logout())
         this.props.dispatch(classActions.logout())
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            return true
+        })
     }
 
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress')
+    }
+    
 
     constructor(props) {
         super(props);
@@ -99,8 +106,12 @@ class Login extends Component {
                         this.navigateAction()
                     } else {
                         Alert.alert('Username or Password was incorrect')
+                        this.props.dispatch(userAction.authUserFailed())
                     }
-                }).catch((err) => { console.log(err) })
+                }).catch((err) => { 
+                    this.props.dispatch(userAction.authUserFailed())
+                    console.log(err) 
+                })
         }
     }
 
