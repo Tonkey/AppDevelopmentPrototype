@@ -22,7 +22,7 @@ export default class Attendance extends Component {
             doRender = <Text>Loading</Text>
         } else {
             doRender = (<View style={styles.headerContainer}>
-                <Text style={styles.headerText}>Total for this period: {this.props.selected.points} (max: {this.props.selected.pointsAvailable})</Text>
+                <Text style={styles.headerText}>Total for this period: {points} (max: {pointsAvailable})</Text>
                 <Text style={styles.subHeaderText}>Attendance Days</Text>
                 <ScrollView>
                     {
@@ -30,7 +30,7 @@ export default class Attendance extends Component {
                             return (
                                 <View key={item.id}>
                                     <AttendanceComponent
-                                        description={item.description}
+                                        description={new Date(item.description).getMonth()+1 +'/'+ new Date(item.description).getDate()}
                                         pointsAvailable={item.pointsAvailable}
                                         pointsGotten={item.pointsGotten}
                                     />

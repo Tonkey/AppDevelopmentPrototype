@@ -7,13 +7,16 @@ export default function reducer(state = {
 }, action) {
     switch (action.type) {
         case 'FETCH_CLASSES': {
-            return { ...state, fetching: true }
+            console.log(action.payload)
+            return { ...state, fetching: action.payload }
             break;
         }
         case 'FETCH_CLASSES_REJECTED': {
+            console.log(action.payload)
             return { ...state, fetching: false, error: action.payload }
         }
         case 'FETCH_CLASSES_FULFILLED': {
+            console.log(action.payload)
             return {
                 ...state,
                 fetching: false,
@@ -28,6 +31,13 @@ export default function reducer(state = {
                 ...state,
                 selected: action.payload.selected
             }
+        }
+        case 'LOGOUT': {
+            return {
+                ...state,
+                class:[]
+            }
+            break;
         }
         default: {
             return state

@@ -24,7 +24,7 @@ export default class HandIn extends Component {
         } else {
             doRender = (
                 this.props.handIns.map((item, index) => {
-                    if (item.type === 'Hand-in') {
+                    if (item.spType === 'Hand-in') {
                         return (
                             <View key={item.id}>
                                 <HandInComponent
@@ -82,20 +82,6 @@ export default class HandIn extends Component {
         super(props)
         this.getMaxPoints = this.getMaxPoints.bind(this)
         this.getPointsGotten = this.getPointsGotten.bind(this)
-        // this.state = {
-        //     attendance: [
-        //         { 'id': 1, 'description': 'P1_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-        //         { 'id': 2, 'description': 'P1_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
-        //         { 'id': 3, 'description': 'P2_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-        //         { 'id': 4, 'description': 'P2_Review', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Review' },
-        //         { 'id': 5, 'description': 'P3_Hand-in', 'pointsGotten': 10, 'pointsAvailable': '10', type: 'Hand-in' },
-        //         { 'id': 6, 'description': 'P4_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-        //         { 'id': 7, 'description': 'P5_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-        //         { 'id': 8, 'description': 'P6_Hand-in', 'pointsGotten': 0, 'pointsAvailable': '10', type: 'Hand-in' },
-        //     ]
-        // }
-
-
     }
 
 }

@@ -3,16 +3,26 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, KeyboardAvo
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import * as userAction from '../../actions/userActions'
+import axios from 'axios'
 
+import * as classActions from '../../actions/classActions'
+import * as userActions from '../../actions/userActions'
 
 @connect((store) => {
     return {
         user: store.user.user,
-        fetched: store.user.fetched
+        fetched: store.user.fetched,
+        loginTry: store.user.loginTry
     }
 })
 class Login extends Component {
     render() {
+        let buttonText = ''
+        if (this.props.loginTry) {
+            buttonText = 'Logging in...'
+        } else {
+            buttonText = 'Login'
+        }
         return (
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
@@ -21,7 +31,7 @@ class Login extends Component {
                         source={require('../../assets/MySchool.png')}
                     />
                     <Text style={styles.title}>Welcome to CPHBusiness StudyPoints App</Text>
-              </View>
+                </View>
                 <KeyboardAvoidingView behavior={'padding'} style={styles.formContainer}>
                     <TextInput
                         placeholder={"username"}
@@ -43,7 +53,7 @@ class Login extends Component {
                         ref={(input) => this.passwordInput = input}
                     />
                     <TouchableOpacity style={styles.buttonContainer} onPress={() => this.inputIsNotEmpty()}>
-                        <Text style={styles.buttonText}>Login</Text>
+                        <Text style={styles.buttonText}>{buttonText}</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
                 <View style={styles.logoContainerBottom}>
@@ -56,11 +66,11 @@ class Login extends Component {
         );
     }
 
-    
-    componentWillMount() {
-        this.props.dispatch(userAction.fetchUser())
+    componentDidMount() {
+        this.props.dispatch(userActions.logout())
+        this.props.dispatch(classActions.logout())
     }
-    
+
 
     constructor(props) {
         super(props);
@@ -77,15 +87,21 @@ class Login extends Component {
     inputIsNotEmpty = () => {
         const { text } = this.state
         const { password } = this.state
-
-        if(text == '' || password == ''){
-            Alert.alert('Username or Password was incorrect')
-        } else if(password === this.props.user.password && text === this.props.user.userName) {
-            this.navigateAction()
+        this.props.dispatch(userAction.fetchUser())
+        if (text == '' || password == '') {
+            Alert.alert('Please enter your Username and Password')
         } else {
-            Alert.alert('Username or Password was incorrect')
+            let reqUrl = 'http://api.nicklasmolving.com/api/user/user?_id=' + text
+            axios.get(reqUrl)
+                .then((response) => {
+                    if (response.data[0].password == password) {
+                        this.props.dispatch(userAction.setUser(response.data[0]))
+                        this.navigateAction()
+                    } else {
+                        Alert.alert('Username or Password was incorrect')
+                    }
+                }).catch((err) => { console.log(err) })
         }
-
     }
 
 }
@@ -128,7 +144,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         backgroundColor: '#2980b9',
         paddingVertical: 15,
-        marginBottom: 20
+        marginBottom: 20,
+        borderRadius: 40,
     },
     buttonText: {
         textAlign: 'center',

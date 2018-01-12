@@ -1,10 +1,25 @@
-export function fetchUser(){
+export function setUser(user){
     return {
-        type: 'FETCH_USER_FULFILLED',
+        type: 'SET_USER',
         payload: {
-            userName: 'user',
-            password: 'user',
-            shortHandName: 'cph-userXXX'
+            userName: user.firstName +' '+ user.lastName,
+            password: user.password,
+            shortHandName: user._id
         }
+    }
+}
+
+export function fetchUser(){
+    return{
+        type: 'FETCH_USER',
+        payload: {
+            loginTry: true
+        }
+    }
+}
+
+export function logout(){
+    return {
+        type: 'LOGOUT'
     }
 }
